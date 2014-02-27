@@ -5,7 +5,7 @@ package
 	
 	import starling.core.Starling;
 	
-	[SWF(FrameRate="60",backgroundColor="0x333333")]
+	[SWF(FrameRate="60",backgroundColor="0x333333",width="960",height="640")]
 	public class MobileTank_SinglePLayer extends Sprite
 	{
 		private var myStarling:Starling;
@@ -18,7 +18,7 @@ package
 		{
 			this.removeEventListener(Event.ADDED_TO_STAGE, onAddToStage);
 			
-			myStarling = new Starling(TangGame, stage);
+			myStarling = new Starling(TankGame, stage);
 			myStarling.antiAliasing = 1;
 			myStarling.showStats = true;
 			myStarling.showStatsAt("left", "bottom");
