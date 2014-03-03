@@ -17,7 +17,7 @@ package
 		private function onAddToStage(e:Event):void
 		{
 			this.removeEventListener(Event.ADDED_TO_STAGE, onAddToStage);
-			
+			trace("starling started.....");
 			myStarling = new Starling(TankGame, stage);
 			myStarling.antiAliasing = 1;
 			myStarling.showStats = true;
