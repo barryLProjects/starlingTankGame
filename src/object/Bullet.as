@@ -8,16 +8,24 @@ package object
 	
 	public class Bullet extends Sprite
 	{
-		private const GRAVITY:Number=9.7;
+		private const GRAVITY:Number=0.97;
 		private var tempQuad:Quad;
 		private var flyingAccX:Number=0;
 		private var flyingAccY:Number=0;
 		
 		private var startPoint:Point;
-		public function Bullet(startPoint:Point)
+		private var firingAngle:Number;
+		private var strength:Number;
+		
+		private var vx:Number,vy:Number,vx_acc:Number=0,vy_acc:Number=0;
+		
+		public function Bullet(startPoint:Point,angle:Number=0,strength:Number=0)
 		{
 			super();
-			//this.startPoint=startPoint;
+			this.startPoint=startPoint;
+			this.firingAngle=angle;
+			this.strength=strength;
+			
 			this.addEventListener(Event.ADDED_TO_STAGE,onAddStage);
 		}
 		private function onAddStage(e:Event):void
@@ -27,7 +35,7 @@ package object
 			this.addChild(this.tempQuad);
 			firingABullet();
 		}
-		private function firingABullet(strength:Number=0,angle:Number=0):void
+		private function firingABullet():void
 		{
 			if(this.startPoint){
 				this.x = this.startPoint.x;
@@ -42,11 +50,14 @@ package object
 		}
 		private function onBulletFlying(e:Event):void
 		{
-			flyingAccX+=0.5;
-			flyingAccY+=0.15;
-			this.x+=2*flyingAccX;
-			this.y+=GRAVITY*.4*flyingAccY;
-			if(this.y>stage.stageHeight-50)
+			vx=this.strength*Math.cos(this.firingAngle)*10;
+			vy=this.strength*Math.sin(this.firingAngle)*30;
+			
+			vy_acc+=GRAVITY;
+			this.x+=vx+vx_acc;
+			
+			this.y+=vy+vy_acc;
+			if(this.y>stage.stageHeight)
 			{
 				this.removeEventListener(Event.ENTER_FRAME,onBulletFlying);
 				this.parent.removeChild(this);
